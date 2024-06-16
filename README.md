@@ -2,7 +2,7 @@
 
 ## Alumno
 
-- **Nombre:** Guerrero Marcos Tomas
+**Nombre:** Guerrero Marcos Tomas
 
 ## Descripción del Proyecto
 
