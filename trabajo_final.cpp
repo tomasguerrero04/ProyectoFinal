@@ -4,7 +4,9 @@ int tipo_de_vino(string);
 bool toro(string);
 int cantidad_toro(string);
 int cantidad_oferta(bool);
+int precio_mayor(int);
 void mas_caro_ex(int, int, int, int, int);
+void cantidad_de_tipos(string);
 
 int main()
 {
