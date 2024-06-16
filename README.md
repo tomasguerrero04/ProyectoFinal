@@ -1,7 +1,7 @@
 Alumno: Guerrero Marcos Tomas
 Se realizo un proyecto para la materia de Programacion, donde se integro todos los temas abordados en el semestre. 
 En el trabajo Practico se pidio que el programa le pida al Usuario las siguientes consignas: 
-1) código del vino
+ 1) código del vino
  2) nombre del Vino
  3) nombre de la marca(toro/linaje/superior/ventaron)
  6)tipo vino: malbec, tinto o blanco
