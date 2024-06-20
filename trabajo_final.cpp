@@ -1,23 +1,31 @@
 #include <iostream>
 using namespace std;
-int tipo_de_vino(string);
-bool toro(string);
-int cantidad_toro(string);
+void cantidad_por_tipo(string, int &, int &, int &);
+void datos();
+int cantidad_vino_toro(string);
 int cantidad_oferta(bool);
-int precio_mayor(int);
+void precio_mayor(int, int, int &, int &, string, string &);
+int floresta_y_blanco(string, string);
+int procentaje_venta(int);
+void calcular_porcentaje_venta(int, int, int &);
 void mas_caro_ex(int, int, int, int, int);
 void cantidad_de_tipos(string);
 
+void ordenamiento_precios(int, int[]);
+void lista_de_marcas(string[], int[], string[], int);
+void mostrar();
+
 int main()
 {
-  int codigo, precio_sin_impuesto, precio_venta, cantidad_malbec = 0, cantidad_tinto = 0, porc_cant_mayor;
+  int codigo, precio_sin_impuesto, precio_venta, cantidad_malbec = 0, cantidad_tinto = 0, cant_floresta_y_blanco = 0, porc_cant_mayor, suma_venta = 0;
   int i = 0, cantidad_blanco = 0, suma_toro = 0, suma_oferta = 0, suma_cant_mayor = 0, mayor = 0;
-  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_marcas[i];
-  string nombre, marca, tipo;
-  bool oferta, decision = 1;
+  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_precio[i];
+  string nombre, marca, tipo, nombre_mayor, listado_de_marcas[i], listado_de_tipos[i];
+  bool oferta, decision = false;
 
   do
   {
+    i++;
     cout << " Ingrese el codigo del vino: ";
     cin >> codigo;
     cout << " Ingrese el nombre del vino: ";
@@ -32,39 +40,66 @@ int main()
     cin >> precio_venta;
     cout << " Si el elemento posee oferta ingrese 1, caso contrario ingrese 0: ";
     cin >> oferta;
-    i++;
     cout << " Si desea ingresar la informacion de otro vino, ingrese 1, caso contrario ingrese 0: ";
     cin >> decision;
-    cantidad_de_tipos(tipo);
-    suma_toro += cantidad_toro(marca);
+    cantidad_por_tipo(tipo, cantidad_malbec, cantidad_tinto, cantidad_blanco);
+    suma_toro += cantidad_vino_toro(marca);
     suma_oferta += cantidad_oferta(oferta);
-    suma_cant_mayor += precio_mayor(precio_sin_impuesto);
+    suma_venta += procentaje_venta(precio_venta);
+    cant_floresta_y_blanco += floresta_y_blanco(marca, tipo);
     suma_sin_impuestos += precio_sin_impuesto;
-    mas_caro_ex(precio_venta, mayor, mas_caro, codigo_mas_caro, codigo);
+    precio_mayor(precio_venta, codigo, mayor, codigo_mas_caro, nombre, nombre_mayor);
+
   } while (decision == 1);
-  porc_cant_mayor = (suma_cant_mayor * 100) / i;
+  // ejercicio a//
+  cout << " La cantidad de vinos malbec es de: " << cantidad_malbec << endl;
+  cout << " La cantidad de vinos tintos es de: " << cantidad_tinto << endl;
+  cout << " La cantidad de vinos blancos es de: " << cantidad_blanco << endl;
+
+  // ejercicio b//
+  cout << " La cantidad de pedidos de vinos de marca toro fue de: " << suma_toro << endl;
+
+  // ejercicio c//
+  cout << " La cantidad de articulos con oferta fue de: " << suma_oferta << endl;
+
+  // ejercicio d//
+  calcular_porcentaje_venta(suma_venta, i, porc_cant_mayor);
+
+  cout << " El porcentaje de vinos mayores a 15000 es de: " << porc_cant_mayor << "%" << endl;
+
+  // ejercicio e//
+
+  cout << " La cantidad de vinos de la marca Floresta y que sean vinos blancos es de: " << cant_floresta_y_blanco << endl;
+
+  // ejercicio f//
+
+  cout << " El vino mas caro fue " << nombre_mayor << ". Con un precio de: " << mayor << ". Codigo: " << codigo_mas_caro << endl;
+
+  // ejercicio g//
+
+  cout << " El precio total acumulado de los vinos, sin contar impuestos, es de: " << suma_sin_impuestos << endl;
+
+  // ejercicio h//
   return 0;
 }
 
-int tipo_de_vino(string vino)
+void cantidad_por_tipo(string tipo, int &cantidad_malbec, int &cantidad_tinto, int &cantidad_blanco)
 {
-
-  if (vino == "malbec")
+  if (tipo == "malbec")
   {
-    return 1;
+    cantidad_malbec++;
   }
-  else if (vino == "tinto")
+  else if (tipo == "tinto")
   {
-    return 2;
+    cantidad_tinto++;
   }
-  else if (vino == "blanco")
+  else if (tipo == "blanco")
   {
-    return 3;
+    cantidad_blanco++;
   }
-  return 0;
 }
 
-bool toro(string marca)
+int cantidad_vino_toro(string marca)
 {
   if (marca == "toro")
   {
@@ -74,19 +109,9 @@ bool toro(string marca)
     return 0;
 }
 
-int cantidad_toro(string marca)
+int cantidad_oferta(bool oferta)
 {
-  int cant_toro = 0;
-  if (toro(marca) == 1)
-  {
-    cant_toro++;
-  }
-  return cant_toro;
-}
-
-int cantidad_oferta(bool of)
-{
-  if (of == 1)
+  if (oferta == 1)
   {
     return 1;
   }
@@ -94,19 +119,24 @@ int cantidad_oferta(bool of)
     return 0;
 }
 
-int precio_mayor(int precios)
+int procentaje_venta(int precio_venta)
 {
-  if (precios > 15000)
+  if (precio_venta > 15000)
   {
     return 1;
   }
   else
     return 0;
+}
+
+void calcular_porcentaje_venta(int suma, int i, int &porc_cant_mayor)
+{
+  porc_cant_mayor = ((suma * 100) / i);
 }
 
 int floresta_y_blanco(string marca, string tipo)
 {
-  if ((tipo == "floresta") && (marca == "blanco"))
+  if ((tipo == "blanco") && (marca == "floresta"))
   {
     return 1;
   }
@@ -116,28 +146,12 @@ int floresta_y_blanco(string marca, string tipo)
   }
 }
 
-void mas_caro_ex(int precio_venta, int mayor, int mas_caro, int codigo_mas_caro, int codigo)
+void precio_mayor(int precio, int codigo, int &mayor, int &codigo_mayor, string nombre, string &nombre_mayor)
 {
-  if (precio_venta > mayor)
+  if (precio > mayor)
   {
-    mas_caro = precio_venta;
-    codigo_mas_caro = codigo;
-  }
-}
-
-void cantidad_de_tipos(string tipo)
-{
-  int cantidad_malbec = 0, cantidad_blanco = 0, cantidad_tinto = 0;
-  if (tipo_de_vino(tipo) == 1)
-  {
-    cantidad_malbec++;
-  }
-  if (tipo_de_vino(tipo) == 2)
-  {
-    cantidad_blanco++;
-  }
-  if (tipo_de_vino(tipo) == 3)
-  {
-    cantidad_tinto++;
+    mayor = precio;
+    codigo_mayor = codigo;
+    nombre_mayor = nombre;
   }
 }
