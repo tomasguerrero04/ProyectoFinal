@@ -1,31 +1,29 @@
 #include <iostream>
 using namespace std;
 void cantidad_por_tipo(string, int &, int &, int &);
-void datos();
 int cantidad_vino_toro(string);
 int cantidad_oferta(bool);
 void precio_mayor(int, int, int &, int &, string, string &);
 int floresta_y_blanco(string, string);
 int procentaje_venta(int);
 void calcular_porcentaje_venta(int, int, int &);
-void mas_caro_ex(int, int, int, int, int);
 void cantidad_de_tipos(string);
-
-void ordenamiento_precios(int, int[]);
-void lista_de_marcas(string[], int[], string[], int);
-void mostrar();
+void lista_marcas(string, string[], int[]);
+void encontrar_elemento_marca(string, string[], int[]);
+void mostrar_lista_marcas(string[], int[]);
 
 int main()
 {
   int codigo, precio_sin_impuesto, precio_venta, cantidad_malbec = 0, cantidad_tinto = 0, cant_floresta_y_blanco = 0, porc_cant_mayor, suma_venta = 0;
   int i = 0, cantidad_blanco = 0, suma_toro = 0, suma_oferta = 0, suma_cant_mayor = 0, mayor = 0;
-  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_precio[i];
-  string nombre, marca, tipo, nombre_mayor, listado_de_marcas[i], listado_de_tipos[i];
+  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_precio[4] = {0, 0, 0, 0};
+  string nombre, marca, tipo, nombre_mayor, listado_de_marcas[4] = {"toro", "linaje", "superior", "ventaron"}, listado_de_tipos[i];
   bool oferta, decision = false;
 
   do
   {
     i++;
+    cout << i << ". " << endl;
     cout << " Ingrese el codigo del vino: ";
     cin >> codigo;
     cout << " Ingrese el nombre del vino: ";
@@ -42,6 +40,7 @@ int main()
     cin >> oferta;
     cout << " Si desea ingresar la informacion de otro vino, ingrese 1, caso contrario ingrese 0: ";
     cin >> decision;
+    cout << endl;
     cantidad_por_tipo(tipo, cantidad_malbec, cantidad_tinto, cantidad_blanco);
     suma_toro += cantidad_vino_toro(marca);
     suma_oferta += cantidad_oferta(oferta);
@@ -49,7 +48,7 @@ int main()
     cant_floresta_y_blanco += floresta_y_blanco(marca, tipo);
     suma_sin_impuestos += precio_sin_impuesto;
     precio_mayor(precio_venta, codigo, mayor, codigo_mas_caro, nombre, nombre_mayor);
-
+    lista_marcas(marca, listado_de_marcas, listado_de_precio);
   } while (decision == 1);
   // ejercicio a//
   cout << " La cantidad de vinos malbec es de: " << cantidad_malbec << endl;
@@ -80,6 +79,8 @@ int main()
   cout << " El precio total acumulado de los vinos, sin contar impuestos, es de: " << suma_sin_impuestos << endl;
 
   // ejercicio h//
+
+  mostrar_lista_marcas(listado_de_marcas, listado_de_precio);
   return 0;
 }
 
@@ -153,5 +154,33 @@ void precio_mayor(int precio, int codigo, int &mayor, int &codigo_mayor, string 
     mayor = precio;
     codigo_mayor = codigo;
     nombre_mayor = nombre;
+  }
+}
+
+void lista_marcas(string marca, string listado_marcas[], int cantidad[])
+{
+  for (int i = 0; i < 4; i++)
+  {
+    encontrar_elemento_marca(marca, listado_marcas, cantidad);
+  }
+}
+
+void encontrar_elemento_marca(string marca, string listado_marca[], int cantidad[])
+{
+  for (int i = 0; i < 4; i++)
+  {
+    if (listado_marca[i] == marca)
+    {
+      cantidad[i]++;
+      break;
+    }
+  }
+}
+void mostrar_lista_marcas(string listado_marcas[], int cantidad[])
+{
+
+  for (int i = 0; i < 4; i++)
+  {
+    cout << listado_marcas[i] << " ventas: " << (cantidad[i] / 4) << endl;
   }
 }
