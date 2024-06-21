@@ -11,13 +11,18 @@ void cantidad_de_tipos(string);
 void lista_marcas(string, string[], int[]);
 void encontrar_elemento_marca(string, string[], int[]);
 void mostrar_lista_marcas(string[], int[]);
+void lista_tipos(string, string[], int[]);
+void encontrar_elemento_tipos(string, string[], int[]);
+void mostrar_lista_tipos(string[], int[]);
+void ordenamiento(string[], int[], int);
+void generar_vector(string[], string, int[], int, int);
 
 int main()
 {
   int codigo, precio_sin_impuesto, precio_venta, cantidad_malbec = 0, cantidad_tinto = 0, cant_floresta_y_blanco = 0, porc_cant_mayor, suma_venta = 0;
-  int i = 0, cantidad_blanco = 0, suma_toro = 0, suma_oferta = 0, suma_cant_mayor = 0, mayor = 0;
-  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_precio[4] = {0, 0, 0, 0};
-  string nombre, marca, tipo, nombre_mayor, listado_de_marcas[4] = {"toro", "linaje", "superior", "ventaron"}, listado_de_tipos[i];
+  int i = 0, cantidad_blanco = 0, suma_toro = 0, suma_oferta = 0, suma_cant_mayor = 0, mayor = 0, vec_precio[50];
+  int mas_caro, suma_sin_impuestos = 0, codigo_mas_caro, listado_de_precio_marca[5] = {0, 0, 0, 0, 0}, listado_de_precio_tipos[3] = {0, 0, 0};
+  string nombre, marca, tipo, nombre_mayor, listado_de_marcas[5] = {"toro", "linaje", "superior", "ventaron", "floresta"}, listado_de_tipos[3] = {"malbec", "tinto", "blanco"}, vec_nombre[50];
   bool oferta, decision = false;
 
   do
@@ -48,7 +53,9 @@ int main()
     cant_floresta_y_blanco += floresta_y_blanco(marca, tipo);
     suma_sin_impuestos += precio_sin_impuesto;
     precio_mayor(precio_venta, codigo, mayor, codigo_mas_caro, nombre, nombre_mayor);
-    lista_marcas(marca, listado_de_marcas, listado_de_precio);
+    lista_marcas(marca, listado_de_marcas, listado_de_precio_marca);
+    lista_tipos(tipo, listado_de_tipos, listado_de_precio_tipos);
+    generar_vector(vec_nombre, nombre, vec_precio, precio_venta, i);
   } while (decision == 1);
   // ejercicio a//
   cout << " La cantidad de vinos malbec es de: " << cantidad_malbec << endl;
@@ -80,7 +87,22 @@ int main()
 
   // ejercicio h//
 
-  mostrar_lista_marcas(listado_de_marcas, listado_de_precio);
+  mostrar_lista_marcas(listado_de_marcas, listado_de_precio_marca);
+
+  // ejercicio i//
+
+  mostrar_lista_tipos(listado_de_tipos, listado_de_precio_tipos);
+
+  // ejercicio j//
+  ordenamiento(vec_nombre, vec_precio, i);
+  cout << " Lista ordenada de vinos mas caros vendidos: " << endl;
+  int q = 1;
+  for (int j = i; j = 0; j--)
+  {
+    cout << q << ". " << vec_nombre[i - j] << ": " << vec_precio[i - j] << endl;
+    q++;
+  }
+
   return 0;
 }
 
@@ -159,7 +181,7 @@ void precio_mayor(int precio, int codigo, int &mayor, int &codigo_mayor, string 
 
 void lista_marcas(string marca, string listado_marcas[], int cantidad[])
 {
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 5; i++)
   {
     encontrar_elemento_marca(marca, listado_marcas, cantidad);
   }
@@ -167,7 +189,7 @@ void lista_marcas(string marca, string listado_marcas[], int cantidad[])
 
 void encontrar_elemento_marca(string marca, string listado_marca[], int cantidad[])
 {
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 5; i++)
   {
     if (listado_marca[i] == marca)
     {
@@ -179,8 +201,64 @@ void encontrar_elemento_marca(string marca, string listado_marca[], int cantidad
 void mostrar_lista_marcas(string listado_marcas[], int cantidad[])
 {
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 5; i++)
   {
     cout << listado_marcas[i] << " ventas: " << (cantidad[i] / 4) << endl;
   }
+}
+
+void lista_tipos(string tipo, string listado_tipos[], int cantidad[])
+{
+  for (int i = 0; i < 3; i++)
+  {
+    encontrar_elemento_tipos(tipo, listado_tipos, cantidad);
+  }
+}
+
+void encontrar_elemento_tipos(string tipo, string listado_tipos[], int cantidad[])
+{
+  for (int i = 0; i < 3; i++)
+  {
+    if (listado_tipos[i] == tipo)
+    {
+      cantidad[i]++;
+      break;
+    }
+  }
+}
+void mostrar_lista_tipos(string listado_tipos[], int cantidad[])
+{
+
+  for (int i = 0; i < 5; i++)
+  {
+    cout << listado_tipos[i] << " ventas: " << (cantidad[i] / 4) << endl;
+  }
+}
+
+void ordenamiento(string nombre[], int precio[], int n)
+{
+  int aux;
+  string aux_2;
+  for (int i = 0; i <= n; i++)
+  {
+    for (int j = 0; j <= i; j++)
+    {
+      if (precio[j] > precio[j + 1])
+      {
+        aux = precio[j];
+        precio[j] = precio[j + 1];
+        precio[j + 1] = aux;
+
+        aux_2 = nombre[j];
+        nombre[j] = nombre[j + 1];
+        nombre[j + 1] = aux_2;
+      }
+    }
+  }
+}
+
+void generar_vector(string nombre[], string nom, int precio[], int p, int n)
+{
+  precio[n - 1] = p;
+  nombre[n - 1] = nom;
 }
