@@ -95,9 +95,10 @@ int main()
 
   // ejercicio j//
   ordenamiento(vec_nombre, vec_precio, i);
+
   cout << " Lista ordenada de vinos mas caros vendidos: " << endl;
   int q = 1;
-  for (int j = i; j = 0; j--)
+  for (int j = 0; j < i; j++)
   {
     cout << q << ". " << vec_nombre[i - j] << ": " << vec_precio[i - j] << endl;
     q++;
@@ -239,9 +240,9 @@ void ordenamiento(string nombre[], int precio[], int n)
 {
   int aux;
   string aux_2;
-  for (int i = 0; i <= n; i++)
+  for (int i = 0; i < n; i++)
   {
-    for (int j = 0; j <= i; j++)
+    for (int j = 0; j < n; j++)
     {
       if (precio[j] > precio[j + 1])
       {
